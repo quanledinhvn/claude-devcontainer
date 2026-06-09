@@ -1,0 +1,44 @@
+{
+  "name": "Node.js Express App",
+
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+
+  "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0.5": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+
+  "mounts": [
+    "source=${localEnv:HOME}/.claude,target=/home/node/.claude,type=bind",
+    "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+  ],
+
+  "containerEnv": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CONFIG_DIR": "/home/node/.claude"
+  },
+
+  "postCreateCommand": "npm install",
+
+  "forwardPorts": [3000],
+
+  "portsAttributes": {
+    "3000": {
+      "label": "Express Server",
+      "onAutoForward": "notify"
+    }
+  },
+
+  "initializeCommand": ".devcontainer/init.sh",
+
+  "remoteUser": "node",
+  "containerUser": "node",
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "security.workspace.trust.enabled": false
+      }
+    }
+  }
+}
